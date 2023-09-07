@@ -71,6 +71,7 @@ fn update_score_board(
     mut score_board_query: Query<&mut Text, With<ScoreBoard>>,
     mut score: ResMut<Score>,
     mut score_up_event: EventReader<ScoreUpEvent>,
+    mut game_over_event: EventReader<GameOverEvent>,
 ) {
     for score_up in score_up_event.iter() {
         if let Ok(mut score_board) = score_board_query.get_single_mut() {
@@ -78,24 +79,26 @@ fn update_score_board(
             score_board.sections[0].value = format!("score: {}", score.val.to_string());
         }
     }
+
+    for _ in game_over_event.iter() {
+        if let Ok(mut score_board) = score_board_query.get_single_mut() {
+            score.val = 0;
+            score_board.sections[0].value = format!("score: {}", score.val.to_string());
+        }
+    }
 }
 
 fn update_high_score_board(
     mut commands: Commands,
-    mut score_board_query: Query<&mut Text, With<ScoreBoard>>,
     mut high_score_board_query: Query<&mut Text, With<HighScoreBoard>>,
     mut high_score: ResMut<HighScore>,
-    mut score: ResMut<Score>,
+    score: Res<Score>,
     mut game_over_event: EventReader<GameOverEvent>,
 ) {
     for _ in game_over_event.iter() {
         if let Ok(mut score_board) = high_score_board_query.get_single_mut() {
             high_score.val = high_score.val.max(score.val);
             score_board.sections[0].value = format!("high score: {}", high_score.val.to_string());
-        }
-        if let Ok(mut score_board) = score_board_query.get_single_mut() {
-            score.val = 0;
-            score_board.sections[0].value = format!("score: {}", score.val.to_string());
         }
         commands.insert_resource(NextState(Some(AppState::MainMenu)));
     }
