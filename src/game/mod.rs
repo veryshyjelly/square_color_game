@@ -24,11 +24,8 @@ impl Plugin for GamePlugin {
             .add_plugins(ScorePlugin)
             .add_systems(OnEnter(AppState::Game), spawn_game_menu)
             .add_systems(OnExit(AppState::Game), despawn_game_menu)
-            .add_systems(
-                Update,
-                (change_color_dark, update_game_menu, change_color_light)
-                    .run_if(in_state(AppState::Game)),
-            );
+            .add_systems(Update, (change_color_dark, change_color_light))
+            .add_systems(Update, update_game_menu.run_if(in_state(AppState::Game)));
     }
 }
 

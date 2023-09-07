@@ -9,8 +9,8 @@ pub fn check_answer(
     mut score_up_event: EventWriter<ScoreUpEvent>,
     mut game_over_event: EventWriter<GameOverEvent>,
 ) {
-    if keyboard_input.just_pressed(KeyCode::Right) && square.color == SquareColor::LIGHT
-        || keyboard_input.just_pressed(KeyCode::Left) && square.color == SquareColor::DARK
+    if (keyboard_input.just_pressed(KeyCode::Right) && square.color == SquareColor::LIGHT)
+        || (keyboard_input.just_pressed(KeyCode::Left) && square.color == SquareColor::DARK)
     {
         let new_square = Square::default();
         (square.val, square.color) = (new_square.val, new_square.color);

@@ -37,8 +37,8 @@ impl Default for Square {
             Square {
                 val: format!(
                     "{}{}",
-                    "ABCDEFGH".chars().nth(rng.gen_range(0..8)).unwrap(),
-                    (1..=8).nth(rng.gen_range(0..8)).unwrap().to_string()
+                    "ABCDEFGH".chars().nth(row).unwrap(),
+                    (1..=8).nth(col).unwrap().to_string()
                 ),
                 color: SquareColor::DARK,
             }
@@ -46,8 +46,8 @@ impl Default for Square {
             Square {
                 val: format!(
                     "{}{}",
-                    "ABCDEFGH".chars().nth(rng.gen_range(0..8)).unwrap(),
-                    (1..=8).nth(rng.gen_range(0..8)).unwrap().to_string()
+                    "ABCDEFGH".chars().nth(row).unwrap(),
+                    (1..=8).nth(col).unwrap().to_string()
                 ),
                 color: SquareColor::LIGHT,
             }
